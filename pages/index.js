@@ -17,7 +17,6 @@ export default function Home() {
       setTask('');
     }
   };
-
   const toggleTodo = async (id) => {
     const response = await axios.put(`/api/todos/${id}`);
     setTodos((prevTodos) =>
@@ -25,8 +24,7 @@ export default function Home() {
         todo._id === id ? { ...todo, completed: !todo.completed } : todo
       )
     );
-  };
-
+  };  
 
   const deleteTodo = async (id) => {
     // Delete todo from the server

@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 3001;
 app.use(bodyParser.json());
-mongoose.connect('mongodb+srv://ponmathittl:fFI6LTEYs2VQEluk@todolist.pnhjdjq.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://sowmiya:fFI6LTEYs2VQEluk@todolist.pnhjdjq.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -26,12 +26,9 @@ app.post('/api/todos', async (req, res) => {
 
 app.put('/api/todos/:id', async (req, res) => {
     const { id } = req.params;
-    const todo = await Todo.findById(id);
-    todo.completed = !todo.completed;
-    await todo.save();
+    const todo = await Todo.findByIdAndUpdate(id, { $set: { completed: !req.body.completed } }, { new: true });
     res.json(todo);
-});
-
+  });
 
 app.delete('/api/todos/:id', async (req, res) => {
   const { id } = req.params;
