@@ -1,17 +1,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
 export default function Home() {
   const [task, setTask] = useState('');
   const [todos, setTodos] = useState([]);
-
   useEffect(() => {
     // Fetch todos from the server
     axios.get('/api/todos').then((response) => {
       setTodos(response.data);
     });
   }, []);
-
   const addTodo = async () => {
     if (task.trim() !== '') {
       // Add todo to the server
@@ -22,7 +19,6 @@ export default function Home() {
   };
 
   const toggleTodo = async (id) => {
-    // Toggle todo completion on the server
     const response = await axios.put(`/api/todos/${id}`);
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
@@ -31,12 +27,12 @@ export default function Home() {
     );
   };
 
+
   const deleteTodo = async (id) => {
     // Delete todo from the server
     await axios.delete(`/api/todos/${id}`);
     setTodos((prevTodos) => prevTodos.filter((todo) => todo._id !== id));
   };
-
   return (
     <div>
       <h1>Todo List</h1>

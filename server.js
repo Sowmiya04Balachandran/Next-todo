@@ -3,15 +3,11 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 3001;
-
 app.use(bodyParser.json());
-
 mongoose.connect('mongodb+srv://ponmathittl:fFI6LTEYs2VQEluk@todolist.pnhjdjq.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-
-
 const todoSchema = new mongoose.Schema({
   task: String,
   completed: Boolean,
@@ -27,13 +23,16 @@ app.post('/api/todos', async (req, res) => {
   await todo.save();
   res.json(todo);
 });
+
 app.put('/api/todos/:id', async (req, res) => {
-  const { id } = req.params;
-  const todo = await Todo.findById(id);
-  todo.completed = !todo.completed;
-  await todo.save();
-  res.json(todo);
+    const { id } = req.params;
+    const todo = await Todo.findById(id);
+    todo.completed = !todo.completed;
+    await todo.save();
+    res.json(todo);
 });
+
+
 app.delete('/api/todos/:id', async (req, res) => {
   const { id } = req.params;
   await Todo.findByIdAndDelete(id);
